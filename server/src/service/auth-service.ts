@@ -53,3 +53,9 @@ export function loginUserService (userData: User) {
 
     return token;
 }
+
+export function getUserService (email: string) {
+    const user = users.find((user) => user.email === email);
+    if (!user) throw new Error('User not found');
+    return user;
+}

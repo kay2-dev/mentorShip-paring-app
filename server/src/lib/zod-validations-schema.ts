@@ -7,8 +7,9 @@ const refineDate = (val: string) => !isNaN(Date.parse(val))
 export const zodUserSchema = z.object({
     email: z.email({ message: 'A Valid Email Required' }),
     password: z.string().min(3, { message: 'Password must be at least 3' }),
+    confirmPassword: z.string().min(3, { message: 'Password must be at least 3' }),
     roles: z.enum(userEnum.enumValues)
-})
+}).refine((data) => data.password !== data.confirmPassword, { path: [ 'confirmPassword' ], message: 'Password does not match' })
 
 export const zodProdileSchema = z.object({
     bio: z.string(),

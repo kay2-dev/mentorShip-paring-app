@@ -3,6 +3,10 @@ import { userEnum, usersTable } from "../../db/schema";
 
 export type TRoles = typeof userEnum.enumValues[ number ]
 
+export interface UserPayload {
+    email: string
+}
+
 export interface User {
     email: string;
     username: string;

@@ -39,12 +39,15 @@ export async function loginUserService (userData: User) {
         const jwtObject = {
             email: existingEmail[ 0 ].email,
         }
-        return jwtHandler.generateToken(jwtObject.email)
+        return jwtHandler.generateToken(jwtObject)
     } catch (error)
     {
         throw error
     }
 }
+
+
+
 
 // TODO WORK ON THIS FUNCTION TO GET AUTHENTICATED USER
 

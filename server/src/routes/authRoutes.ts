@@ -1,6 +1,6 @@
 import express from 'express';
 import { API_END_POINTS } from "../constant/constants";
-import { login, register } from '../controller/authControlle';
+import { login, refresh, register } from '../controller/authControlle';
 import { validateIncomingData } from '../middleware/validate-incoming-data';
 import { baseUserSchema, zodRegisterUserSchema } from '../lib/zod-validations-schema';
 
@@ -19,4 +19,4 @@ authRouter.post(API_END_POINTS.authEndPoints.register, validateIncomingData(zodR
 authRouter.post(API_END_POINTS.authEndPoints.login, validateIncomingData(baseUserSchema), login);
 authRouter.post(API_END_POINTS.authEndPoints.logout, () => { });
 
-authRouter.get(API_END_POINTS.authEndPoints.me, () => { });
+authRouter.get(API_END_POINTS.authEndPoints.me, refresh);

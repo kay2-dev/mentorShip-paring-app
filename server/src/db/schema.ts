@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, Index, index } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, Index, index, date } from "drizzle-orm/pg-core";
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
 
@@ -31,6 +31,7 @@ export const profileTable = pgTable("user_profiles", {
 export const availability = pgTable("availabilities", {
     id: integer('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
+    date: date('date').notNull(),
     start: timestamp('start_time').notNull(),
     end: timestamp('end_time').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),

@@ -1,60 +1,68 @@
 import bcrypt from 'bcrypt'
-import { User } from '../types/user/user-types';
+import { NewUsers, User } from '../types/user/user-types';
 import { config } from '../config/config';
 import jwt from 'jsonwebtoken'
+import { UserRepository } from '../repository/user-repository';
 
 
 const users: User[] = []
 
 
+const userRepository = new UserRepository()
 
-
-export function registerUserService (userData: User) {
+export async function registerUserService (userData: NewUsers) {
     //  check if user already exists
 
-    const existingUser = users.find((user) => user.email === userData.email);
+    try
+    {
 
-    if (existingUser)
-        throw new Error('User already exists');
+        const hashedPassword = await bcrypt.hash(userData.password, 10)
+        const newUser = await userRepository.createUser({ ...userData, password: hashedPassword })
 
-    const hashedPassword = bcrypt.hashSync(userData.password, 10)
+        const token = jwt.sign({ email: newUser[ 0 ].email }, config.JWT_SECRET, { expiresIn: '1h' })
+        return token
 
-    const newUser: User = {
-        ...userData,
-        password: hashedPassword
-    };
-
-    users.push(newUser);
-    const jwtObject = {
-        email: newUser.email
+    } catch (error)
+    {
+        throw error
     }
 
-    const token = jwt.sign(jwtObject, config.JWT_SECRET, { expiresIn: '1h' });
-
-    return token;
 }
 
 
 
-export function loginUserService (userData: User) {
+export async function loginUserService (userData: User) {
     //  check if user already exists
 
-    const existingEmail = users.find((user) => user.email === userData.email);
 
-    const isPasswordValid = existingEmail && bcrypt.compareSync(userData.password, existingEmail.password);
+    try
+    {
+        const existingEmail = await userRepository.findUserByEmail(userData.email)
+        const isPasswordValid = existingEmail && bcrypt.compareSync(userData.password, existingEmail[ 0 ].email);
+        if (!existingEmail || !isPasswordValid)
+            throw new Error('invalid credentials')
+        const jwtObject = {
+            email: existingEmail[ 0 ].email,
+        }
+        const token = jwt.sign(jwtObject, config.JWT_SECRET, { expiresIn: '1h' });
+        return token;
 
-    if (!existingEmail || !isPasswordValid)
-        throw new Error('invalid credentials')
-
-    const jwtObject = {
-        email: existingEmail.email,
+    } catch (error)
+    {
+        throw error
     }
-    const token = jwt.sign(jwtObject, config.JWT_SECRET, { expiresIn: '1h' });
-
-    return token;
 }
 
-export function getUserService (email: string) {
+// TODO WORK ON THIS FUNCTION TO GET AUTHENTICATED USER
+
+export async function getUserService (email: string) {
+    try
+    {
+
+    } catch (error)
+    {
+
+    }
     const user = users.find((user) => user.email === email);
     if (!user) throw new Error('User not found');
     return user;

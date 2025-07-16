@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db-index";
 import { usersTable, profileTable } from "../db/schema";
-import { TRoles, User } from "../types/user/user-types";
+import { TRoles, NewUsers, User } from "../types/user/user-types";
 
 export class UserRepository {
     db: typeof db;
@@ -9,8 +9,11 @@ export class UserRepository {
         this.db = db;
     }
 
-    async createUser (userData: any) {
-        return await this.db.insert(usersTable).values(userData);
+    async createUser (userData: NewUsers) {
+        return await this.db.insert(usersTable).values(userData).returning();
+    }
+    async findUserByEmail (email: string) {
+        return await this.db.select().from(usersTable).where(eq(usersTable.email, email))
     }
 
     async createUserProfile (profileData: any) {

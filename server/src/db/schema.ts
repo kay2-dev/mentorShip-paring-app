@@ -1,11 +1,11 @@
-import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date, serial } from "drizzle-orm/pg-core";
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
 
 
 
 export const usersTable = pgTable("users", {
-    id: integer('id').primaryKey(),
+    id: serial('id').primaryKey().notNull(),
     email: varchar('email', { length: 255 }).notNull().unique(),
     password: varchar('password', { length: 100 }).notNull(),
     roles: userEnum('roles'),
@@ -24,7 +24,7 @@ export const usersTable = pgTable("users", {
 }))
 
 export const profileTable = pgTable("user_profiles", {
-    id: integer('id').primaryKey(),
+    id: serial('id').primaryKey().notNull(),
     bio: varchar('bio', { length: 255 }).notNull(),
     skills: text('skills').array().notNull(),
     goals: text('goals').array().notNull(),
@@ -36,7 +36,7 @@ export const profileTable = pgTable("user_profiles", {
 }))
 
 export const availability = pgTable("availabilities", {
-    id: integer('id').primaryKey().notNull(),
+    id: serial('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
     date: date('date').notNull(),
     start: timestamp('start_time').notNull(),
@@ -48,7 +48,7 @@ export const availability = pgTable("availabilities", {
 }))
 
 export const session = pgTable("session", {
-    id: integer('id').primaryKey().notNull(),
+    id: serial('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
     menteeId: integer('mentee_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
     date: timestamp('date').notNull(),

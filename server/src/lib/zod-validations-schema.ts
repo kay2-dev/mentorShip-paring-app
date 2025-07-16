@@ -31,4 +31,3 @@ export const zodSessionSchema = z.object({
     feedBack: z.string(),
     rating: z.number()
 })
-

@@ -1,6 +1,8 @@
 import express from 'express';
 import { API_END_POINTS } from "../constant/constants";
 import { login, register } from '../controller/authControlle';
+import { validateIncomingData } from '../middleware/validate-incoming-data';
+import { baseUserSchema, zodRegisterUserSchema } from '../lib/zod-validations-schema';
 
 export const authRouter = express.Router()
 
@@ -13,8 +15,8 @@ export const authRouter = express.Router()
 
 // post('/', () => { });
 
-authRouter.post(API_END_POINTS.authEndPoints.register, register);
-authRouter.post(API_END_POINTS.authEndPoints.login, login);
+authRouter.post(API_END_POINTS.authEndPoints.register, validateIncomingData(zodRegisterUserSchema), register);
+authRouter.post(API_END_POINTS.authEndPoints.login, validateIncomingData(baseUserSchema), login);
 authRouter.post(API_END_POINTS.authEndPoints.logout, () => { });
 
 authRouter.get(API_END_POINTS.authEndPoints.me, () => { });

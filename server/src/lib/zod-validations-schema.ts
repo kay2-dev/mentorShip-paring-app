@@ -4,6 +4,7 @@ import { userEnum } from "../db/schema";
 const refineDate = (val: string) => !isNaN(Date.parse(val))
 
 // TODO ADD Email RegExp && password ReqExp
+
 export const zodUserSchema = z.object({
     email: z.email({ message: 'A Valid Email Required' }),
     password: z.string().min(3, { message: 'Password must be at least 3' }),

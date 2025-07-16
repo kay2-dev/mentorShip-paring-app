@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
+import { BadRequestError } from '../utils/app-error';
 
 declare module 'express-serve-static-core' {
     interface Request {
@@ -15,7 +16,7 @@ export function authGuard (req: Request, response: Response, next: NextFunction)
     const token = req.headers.authorization?.split(' ')[ 1 ];
 
     if (!token)
-        return response.status(401).json({ message: 'Unauthorized' });
+        throw new BadRequestError()
 
     try
     {
@@ -24,6 +25,6 @@ export function authGuard (req: Request, response: Response, next: NextFunction)
         next();
     } catch (error)
     {
-        next(response.status(401).json({ message: 'Invalid token' }));
+        next(new BadRequestError());
     }
 }

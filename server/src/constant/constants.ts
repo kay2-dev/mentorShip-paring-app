@@ -1,3 +1,4 @@
+import { CookieOptions } from "express"
 
 const person = {
     name: 'John Doe',
@@ -42,3 +43,9 @@ export const API_END_POINTS = {
         updateUserRole: '/admin/users/:id/role'
     }
 }
+
+export const cookieOption: CookieOptions = {
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 7 * 24 * 60 * 100
+} 

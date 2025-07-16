@@ -3,6 +3,7 @@ import { NewUsers, User } from '../types/user/user-types';
 import { config } from '../config/config';
 import jwt from 'jsonwebtoken'
 import { UserRepository } from '../repository/user-repository';
+import { jwtHandler } from '../utils/jwt-handler';
 
 
 const users: User[] = []
@@ -10,23 +11,12 @@ const users: User[] = []
 
 const userRepository = new UserRepository()
 
-export async function registerUserService (userData: NewUsers) {
-    //  check if user already exists
+export async function registerUserService (userData: NewUsers) {    //  check if user already exists
 
     try
     {
-
         const hashedPassword = await bcrypt.hash(userData.password, 10)
-        const newUser = await userRepository.createUser({ ...userData, password: hashedPassword })
-
-        console.log(newUser[ 0 ])
-
-
-        const token = jwt.sign({ email: newUser[ 0 ].email }, config.JWT_SECRET, { expiresIn: '1h' })
-
-        console.log(token)
-        return token
-
+        await userRepository.createUser({ ...userData, password: hashedPassword })
     } catch (error)
     {
         throw error
@@ -49,9 +39,7 @@ export async function loginUserService (userData: User) {
         const jwtObject = {
             email: existingEmail[ 0 ].email,
         }
-        const token = jwt.sign(jwtObject, config.JWT_SECRET, { expiresIn: '1h' });
-        return token;
-
+        return jwtHandler.generateToken(jwtObject.email)
     } catch (error)
     {
         throw error

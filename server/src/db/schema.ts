@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, Index, index, date } from "drizzle-orm/pg-core";
+import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date } from "drizzle-orm/pg-core";
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
 
@@ -9,11 +9,18 @@ export const usersTable = pgTable("users", {
     email: varchar('email', { length: 255 }).notNull().unique(),
     password: varchar('password', { length: 100 }).notNull(),
     roles: userEnum('roles'),
+    mentorId: integer('mentor_id'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
 
 }, (table) => ({
+    mentorFk: foreignKey({
+        columns: [ table.mentorId ],
+        foreignColumns: [ table.id ],
+        name: 'mento_fk',
+    }).onDelete('set null'),
     emailIndex: uniqueIndex('email_index').on(table.email)
+
 }))
 
 export const profileTable = pgTable("user_profiles", {
@@ -50,3 +57,4 @@ export const session = pgTable("session", {
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
 })
+

@@ -27,20 +27,20 @@ export class NotFoundError extends AppErr {
 
 
 export class BadRequestError extends AppErr {
-    constructor (message = 'Not found') {
+    constructor (message = 'Bad Request') {
         super(message, 401)
     }
 }
 
 
 export class UnAuthorisedRequestError extends AppErr {
-    constructor (message = 'Not found') {
+    constructor (message = 'UnAuthorized request') {
         super(message, 403)
     }
 }
 
 export class ineternalServerError extends AppErr {
-    constructor (message = 'Not found') {
+    constructor (message = 'An internal Server error occured') {
         super(message, 401)
     }
 }

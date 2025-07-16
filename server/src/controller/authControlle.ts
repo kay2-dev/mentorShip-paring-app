@@ -7,6 +7,7 @@ import { jwtHandler } from '../utils/jwt-handler';
 import { config } from '../config/config';
 import jwt from 'jsonwebtoken'
 import { error } from 'console';
+import { BadRequestError, ineternalServerError } from '../utils/app-error';
 
 
 
@@ -20,9 +21,13 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
             message: "User registered successfully",
         })
         next();
-    } catch (error)
+    } catch (error: any)
     {
-        next(error);
+        if (error.code === '23505')
+        {
+            next(new ineternalServerError())
+        }
+        next(error)
     }
 
 }
@@ -51,7 +56,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 export const refresh = async (req: Request, res: Response, next: NextFunction) => {
     const refreshToken = req.cookies.refreshToken
 
-    if (!refreshToken) throw new Error('')
+    if (!refreshToken) throw new BadRequestError()
 
     jwt.verify(refreshToken, config.JWT_SECRET, (error: jwt.VerifyErrors | null, user: any) => {
         if (error) return

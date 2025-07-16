@@ -4,6 +4,7 @@ import { config } from '../config/config';
 import jwt from 'jsonwebtoken'
 import { UserRepository } from '../repository/user-repository';
 import { jwtHandler } from '../utils/jwt-handler';
+import { BadRequestError } from '../utils/app-error';
 
 
 const users: User[] = []
@@ -35,14 +36,14 @@ export async function loginUserService (userData: User) {
         const existingEmail = await userRepository.findUserByEmail(userData.email)
         const isPasswordValid = existingEmail && bcrypt.compareSync(userData.password, existingEmail[ 0 ].password);
         if (!existingEmail || !isPasswordValid)
-            throw new Error('invalid credentials')
+            throw new BadRequestError('invalid credentials')
         const jwtObject = {
             email: existingEmail[ 0 ].email,
         }
         return jwtHandler.generateToken(jwtObject)
-    } catch (error)
+    } catch (error: any)
     {
-        throw error
+        throw new BadRequestError(error.message)
     }
 }
 

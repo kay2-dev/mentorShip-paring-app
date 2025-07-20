@@ -39,7 +39,7 @@ export const getLoggedInUserService = async (jwtPayload: JwtPayload) => {
     // i need to omit the password
 }
 
-export const updateUserService = async (user: Partial<UpdateUser>, jwtPayload: JwtPayload) => {
+export const updateUserService = async (user: UpdateUser, jwtPayload: JwtPayload) => {
     try
     {
         const { id } = jwtPayload
@@ -49,3 +49,15 @@ export const updateUserService = async (user: Partial<UpdateUser>, jwtPayload: J
         throw error
     }
 }
+
+export const updateUserProfileService = async (profileUpdateData: UpdateUserProfile, jwtPayload: JwtPayload) => {
+    try
+    {
+        const { id } = jwtPayload
+        await userRepository.updateUserProfile(id, profileUpdateData)
+    } catch (error)
+    {
+        throw error
+    }
+}
+

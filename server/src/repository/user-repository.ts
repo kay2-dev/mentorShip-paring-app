@@ -24,9 +24,6 @@ export class UserRepository {
         const [ userProfile ] = await this.db.select().from(profileTable).where(eq(profileTable.userId, id))
         return { ...user, ...userProfile }
     }
-    async deleteUser (id: number) {
-        return this.db.delete(usersTable).where(eq(usersTable.id, id))
-    }
     async updateUserProfile (id: number, profileData: UpdateUserProfile) {
         await this.db.update(profileTable).set(profileData).where(eq(profileTable.userId, id))
     }
@@ -35,5 +32,8 @@ export class UserRepository {
     }
     async updateUserRole (id: number, newRole: TRoles) {
         return this.db.update(usersTable).set({ roles: newRole }).where(eq(usersTable.id, id))
+    }
+    async deleteUser (id: number) {
+        return this.db.delete(usersTable).where(eq(usersTable.id, id))
     }
 }

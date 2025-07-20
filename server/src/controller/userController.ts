@@ -56,3 +56,14 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
         next(error)
     }
 }
+export const updateUserProfile = async (req: Request, res: Response, next: NextFunction) => {
+    try
+    {
+        await updateUserService(req.body as UpdateUser, req.user!)
+        res.status(201).json({ message: 'update successful' })
+        next()
+    } catch (error)
+    {
+        next(error)
+    }
+}

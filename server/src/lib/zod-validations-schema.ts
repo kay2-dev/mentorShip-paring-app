@@ -1,5 +1,5 @@
 import z from "zod";
-import { userEnum } from "../db/schema";
+import { requestStatusEnum, userEnum } from "../db/schema";
 
 const refineDate = (val: string) => !isNaN(Date.parse(val))
 
@@ -38,3 +38,14 @@ export const zodSessionSchema = z.object({
     feedBack: z.string(),
     rating: z.number()
 })
+
+export const zodSendRequest = z.object({ mentorId: z.number() })
+
+export const zodUpdateRequestStatus = z.object({
+    requestId: z.number(),
+    menteeId: z.number(),
+    status: z.enum(requestStatusEnum.enumValues)
+})
+
+export type TSendRequest = z.infer<typeof zodSendRequest>
+export type TUpdateRequestStatus = z.infer<typeof zodUpdateRequestStatus>

@@ -22,6 +22,10 @@ export class MentorShipRepository extends UserRepository {
         return await this.db.insert(requestTable).values({ mentorId: mentorId, menteeId: menteeId })
     }
 
+    async getAllRequests (mentorId: number) {
+        return await this.db.select().from(requestTable).where(eq(requestTable.mentorId, mentorId))
+    }
+
     async updateRequestStatus (requestId: number, status: TRequestStatus) {
         await this.db.update(requestTable).set({ requestStatus: status }).where(eq(requestTable.id, requestId))
     }

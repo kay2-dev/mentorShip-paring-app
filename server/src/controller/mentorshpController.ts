@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
-import { getAllMentorsService, sendRequestToMentorsService } from "../service/mentor-ship-service"
-import { TRequestBody } from "../types/user/user-types"
+import { acceptMenteeRequestsService, getAllMentorsService, sendRequestToMentorsService } from "../service/mentor-ship-service"
+import { TSendRequest, TUpdateRequestStatus } from "../lib/zod-validations-schema"
 
 
 export const getAllMentors = async (req: Request, res: Response, next: NextFunction) => {
@@ -21,21 +21,22 @@ export const getAllMentors = async (req: Request, res: Response, next: NextFunct
 export const sendRequestToMentors = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-        await sendRequestToMentorsService(req.body as number, req.user!)
+        await sendRequestToMentorsService(req.body as TSendRequest, req.user!)
         res.json({ message: 'request sent succefully' })
         next()
     } catch (error)
     {
-        throw error
+        next(error)
     }
 }
 
-export const manageMenteeRequests = async (req: Request, res: Response, next: NextFunction) => {
+export const manageRequests = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-
+        await acceptMenteeRequestsService(req.body as TUpdateRequestStatus)
+        res.json({ message: 'action completed' })
     } catch (error)
     {
-
+        next(error)
     }
 }

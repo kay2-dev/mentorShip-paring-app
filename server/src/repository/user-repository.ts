@@ -20,6 +20,7 @@ export class UserRepository {
     async createUserProfile (profileData: NewProfile, id: number) {
         return await this.db.insert(profileTable).values({ ...profileData, userId: id })
     }
+
     async getUser (id: number) {
         const [ user ] = await this.db.select().from(usersTable).where(eq(usersTable.id, id))
         const [ userProfile ] = await this.db.select().from(profileTable).where(eq(profileTable.userId, id))

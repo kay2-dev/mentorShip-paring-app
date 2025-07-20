@@ -34,20 +34,20 @@ export const sendRequestToMentorsService = async (sendRequest: TSendRequest, jwt
     try
     {
         const { id } = jwtPayload
-        return await mentorShipRepository.createRequest(id, sendRequest.mentorId)
+        return await mentorShipRepository.createRequest(sendRequest.mentorId, id)
     } catch (error)
     {
         throw error
     }
 }
 
-export const acceptMenteeRequestsService = async (updateStatusPayload: TUpdateRequestStatus) => {
+export const acceptMenteeRequestsService = async (requestId: string, updateStatusPayload: TUpdateRequestStatus) => {
     try
     {
-        const { requestId, menteeId, status } = updateStatusPayload
-        await mentorShipRepository.updateRequestStatus(requestId, status)
+        const { menteeId, status } = updateStatusPayload
+        await mentorShipRepository.updateRequestStatus(parseInt(requestId), status)
         await mentorShipRepository.addMentees(menteeId)
-        await mentorShipRepository.deleteRequests(requestId)
+        await mentorShipRepository.deleteRequests(parseInt(requestId))
     } catch (error)
     {
         throw error

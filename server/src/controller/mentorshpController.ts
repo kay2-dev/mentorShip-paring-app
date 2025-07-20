@@ -61,7 +61,7 @@ export const getAllRequestsRecived = async (req: Request, res: Response, next: N
 export const manageRequests = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-        await acceptMenteeRequestsService(req.body as TUpdateRequestStatus)
+        await acceptMenteeRequestsService(req.params.id, req.body as TUpdateRequestStatus)
         res.json({ message: 'action completed' })
     } catch (error)
     {

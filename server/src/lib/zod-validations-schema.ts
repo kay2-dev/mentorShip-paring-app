@@ -42,7 +42,6 @@ export const zodSessionSchema = z.object({
 export const zodSendRequest = z.object({ mentorId: z.number() })
 
 export const zodUpdateRequestStatus = z.object({
-    requestId: z.number(),
     menteeId: z.number(),
     status: z.enum(requestStatusEnum.enumValues)
 })

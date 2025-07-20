@@ -34,8 +34,8 @@ export async function loginUserService (userData: User) {
     try
     {
         const existingEmail = await userRepository.findUserByEmail(userData.email)
-        const isPasswordValid = existingEmail && bcrypt.compareSync(userData.password, existingEmail[ 0 ].password);
-        if (!existingEmail || !isPasswordValid)
+        const isPasswordValid = existingEmail.length !== 0 && bcrypt.compareSync(userData.password, existingEmail[ 0 ].password);
+        if (existingEmail.length === 0 || !isPasswordValid)
             throw new BadRequestError('invalid credentials')
         const jwtObject = {
             id: existingEmail[ 0 ].id,

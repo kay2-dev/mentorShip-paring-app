@@ -17,8 +17,6 @@ export class UserRepository {
     }
 
     async createUserProfile (profileData: NewProfile, id: number) {
-
-        console.log(profileData, id)
         return await this.db.insert(profileTable).values({ ...profileData, userId: id })
     }
     async getUserProfile (id: number) {

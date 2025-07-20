@@ -11,7 +11,6 @@ import { BadRequestError } from "../utils/app-error"
 export const createUserProfile = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-
         await createUserProfileService(req.body as NewProfile, req.user!)
         next()
     } catch (error: any)

@@ -9,9 +9,7 @@ export const createUserProfileService = async (userProfile: NewProfile, JwtPaylo
     try
     {
         const { id } = JwtPayload
-        console.log(id)
         await userRepository.createUserProfile(userProfile, id)
-
     } catch (error: any)
     {
         throw error

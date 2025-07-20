@@ -3,6 +3,8 @@ import { db } from "../db-index";
 import { usersTable, profileTable } from "../db/schema";
 import { TRoles, NewUsers, NewProfile, Profile, Users, UpdateUserProfile, UpdateUser } from "../types/user/user-types";
 
+
+
 export class UserRepository {
     db: typeof db;
     constructor () {

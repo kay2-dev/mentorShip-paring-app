@@ -1,20 +1,16 @@
-import { UserRepository } from "../repository/user-repository"
+import { MentorShipRepository } from "../repository/mentor-ship-repository"
 
 
 // filters
 // search
 
 
-const userRepository = new UserRepository()
+const mentorShipRepository = new MentorShipRepository()
 
 export const getAllMentorsService = async () => {
-
-
+    return await mentorShipRepository.getAllMentors()
 }
 
-export const getFilterdMentorsService = async () => {
-
-}
 export const sendRequestToMentorsService = async () => {
 
 }

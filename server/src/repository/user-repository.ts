@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db-index";
 import { usersTable, profileTable } from "../db/schema";
-import { TRoles, NewUsers, User, NewProfile } from "../types/user/user-types";
+import { TRoles, NewUsers, NewProfile, Profile, Users, UpdateUserProfile, UpdateUser } from "../types/user/user-types";
 
 export class UserRepository {
     db: typeof db;
@@ -19,15 +19,19 @@ export class UserRepository {
     async createUserProfile (profileData: NewProfile, id: number) {
         return await this.db.insert(profileTable).values({ ...profileData, userId: id })
     }
-    async getUserProfile (id: number) {
-        const userProfile = this.db.select().from(usersTable).where(eq(usersTable.id, id))
-        return userProfile
+    async getUser (id: number) {
+        const [ user ] = await this.db.select().from(usersTable).where(eq(usersTable.id, id))
+        const [ userProfile ] = await this.db.select().from(profileTable).where(eq(profileTable.userId, id))
+        return { ...user, ...userProfile }
     }
     async deleteUser (id: number) {
         return this.db.delete(usersTable).where(eq(usersTable.id, id))
     }
-    async updateUserProfile (id: number, profileData: any) {
-        return this.db.update(profileTable).set(profileData).where(eq(profileTable.userId, id))
+    async updateUserProfile (id: number, profileData: UpdateUserProfile) {
+        await this.db.update(profileTable).set(profileData).where(eq(profileTable.userId, id))
+    }
+    async updateUser (id: number, userData: UpdateUser) {
+        await this.db.update(usersTable).set(userData).where(eq(usersTable.id, id))
     }
     async updateUserRole (id: number, newRole: TRoles) {
         return this.db.update(usersTable).set({ roles: newRole }).where(eq(usersTable.id, id))

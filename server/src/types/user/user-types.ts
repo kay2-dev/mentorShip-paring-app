@@ -19,3 +19,6 @@ export type Users = InferSelectModel<typeof usersTable>
 
 export type NewProfile = InferInsertModel<typeof profileTable>
 export type Profile = InferSelectModel<typeof profileTable>
+
+export type UpdateUser = Partial<Users>
+export type UpdateUserProfile = Partial<Profile>

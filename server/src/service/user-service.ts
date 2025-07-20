@@ -1,6 +1,6 @@
 import { JwtPayload } from "jsonwebtoken";
 import { UserRepository } from "../repository/user-repository";
-import { NewProfile } from "../types/user/user-types";
+import { NewProfile, UpdateUser, UpdateUserProfile } from "../types/user/user-types";
 
 
 const userRepository = new UserRepository()
@@ -16,3 +16,36 @@ export const createUserProfileService = async (userProfile: NewProfile, JwtPaylo
     }
 }
 
+export const findOneUserService = async (id: string) => {
+    try
+    {
+        return await userRepository.getUser(parseInt(id))
+    } catch (error)
+    {
+        throw error
+    }
+}
+
+export const getLoggedInUserService = async (jwtPayload: JwtPayload) => {
+
+    try
+    {
+        const { id } = jwtPayload
+        return await userRepository.getUser(id)
+    } catch (error)
+    {
+        throw error
+    }
+    // i need to omit the password
+}
+
+export const updateUserService = async (user: Partial<UpdateUser>, jwtPayload: JwtPayload) => {
+    try
+    {
+        const { id } = jwtPayload
+        await userRepository.updateUser(id, user)
+    } catch (error)
+    {
+        throw error
+    }
+}

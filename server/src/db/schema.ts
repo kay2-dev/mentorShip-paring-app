@@ -35,6 +35,7 @@ export const profileTable = pgTable("user_profiles", {
     userIdIndex: uniqueIndex('user_id_index').on(table.userId)
 }))
 
+
 export const availability = pgTable("availabilities", {
     id: serial('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),

@@ -9,7 +9,6 @@ const refineDate = (val: string) => !isNaN(Date.parse(val))
 export const baseUserSchema = z.object({
     email: z.email({ message: 'A Valid Email Required' }),
     password: z.string().min(3, { message: 'Password must be at least 3' }),
-
 })
 
 export const zodRegisterUserSchema = baseUserSchema.extend({
@@ -22,6 +21,9 @@ export const zodProfileSchema = z.object({
     skills: z.array(z.string()),
     goals: z.array(z.string())
 })
+
+export const zodUpdateProdileSchema = zodProfileSchema.extend({}).partial()
+
 
 export const zodAvailabilitySchema = z.object({
     date: z.string().refine(refineDate, {

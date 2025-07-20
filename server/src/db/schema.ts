@@ -9,12 +9,14 @@ export const requestStatusEnum = pgEnum('request-status', [ 'accepted', 'decline
 
 export const requestTable = pgTable("requests", {
     id: serial('id').primaryKey().notNull(),
-    userId: integer('user_id').references(() => usersTable.id).notNull(),
+    mentorId: integer('mentor_id').references(() => usersTable.id).notNull(),
+    menteeId: integer('mentee_id').references(() => usersTable.id).notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     requestStatus: requestStatusEnum('request-status')
 }, (table) => ({
-    userRequestIndex: uniqueIndex('userId_request_index').on(table.userId)
+    mentorIndex: uniqueIndex('userId_request_index').on(table.mentorId),
+    menteeIndex: uniqueIndex('userId_request_index').on(table.menteeId),
 }))
 
 export const usersTable = pgTable("users", {

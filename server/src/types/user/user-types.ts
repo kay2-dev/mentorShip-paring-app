@@ -8,6 +8,10 @@ export interface UserPayload {
     id: number
 }
 
+export type TRequestBody = {
+    id: number
+}
+
 export interface User {
     email: string;
     username: string;

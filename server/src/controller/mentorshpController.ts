@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import { getAllMentorsService, sendRequestToMentorsService } from "../service/mentor-ship-service"
+import { TRequestBody } from "../types/user/user-types"
 
 
 export const getAllMentors = async (req: Request, res: Response, next: NextFunction) => {
@@ -14,11 +15,13 @@ export const getAllMentors = async (req: Request, res: Response, next: NextFunct
     }
 }
 
+
+
 // creation of Request...
 export const sendRequestToMentors = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-        await sendRequestToMentorsService(req.user!)
+        await sendRequestToMentorsService(req.body as number, req.user!)
         res.json({ message: 'request sent succefully' })
         next()
     } catch (error)

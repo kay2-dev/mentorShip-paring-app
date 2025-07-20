@@ -20,11 +20,11 @@ export const getAllMentorsService = async () => {
     }
 }
 
-export const sendRequestToMentorsService = async (jwtPayload: JwtPayload) => {
+export const sendRequestToMentorsService = async (mentorId: number, jwtPayload: JwtPayload) => {
     try
     {
         const { id } = jwtPayload
-        return await mentorShipRepository.createRequest(id)
+        return await mentorShipRepository.createRequest(id, mentorId)
     } catch (error)
     {
         throw error

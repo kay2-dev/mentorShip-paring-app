@@ -1,6 +1,7 @@
 import { JwtPayload } from "jsonwebtoken";
 import { UserRepository } from "../repository/user-repository";
 import { NewProfile, UpdateUser, UpdateUserProfile } from "../types/user/user-types";
+import { BadRequestError } from "../utils/app-error";
 
 
 const userRepository = new UserRepository()
@@ -19,7 +20,10 @@ export const createUserProfileService = async (userProfile: NewProfile, JwtPaylo
 export const findOneUserService = async (id: string) => {
     try
     {
-        return await userRepository.getUser(parseInt(id))
+        const userFound = await userRepository.getUser(parseInt(id))
+        // TODO LOOK FOR A BEETER WAY TO DO THIS
+        if (!userFound.email) throw new BadRequestError('No User Found')
+        return userFound
     } catch (error)
     {
         throw error

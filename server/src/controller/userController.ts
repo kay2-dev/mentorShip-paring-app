@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
-import { createUserProfileService, findOneUserService, getLoggedInUserService, updateUserService } from "../service/user-service"
-import { NewProfile, UpdateUser } from "../types/user/user-types"
+import { createUserProfileService, findOneUserService, getLoggedInUserService, updateUserProfileService, updateUserService } from "../service/user-service"
+import { NewProfile, UpdateUser, UpdateUserProfile } from "../types/user/user-types"
 import { BadRequestError } from "../utils/app-error"
 
 // profile creation
@@ -40,9 +40,10 @@ export const getLoggedInUser = async (req: Request, res: Response, next: NextFun
     {
         const loggedInUser = await getLoggedInUserService(req.user!)
         res.status(200).json({ loggedInUser })
+        next()
     } catch (error)
     {
-        throw error
+        next(error)
     }
 }
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -59,8 +60,8 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 export const updateUserProfile = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-        await updateUserService(req.body as UpdateUser, req.user!)
-        res.status(201).json({ message: 'update successful' })
+        await updateUserProfileService(req.body as UpdateUserProfile, req.user!)
+        res.status(201).json({ message: 'update successfull' })
         next()
     } catch (error)
     {

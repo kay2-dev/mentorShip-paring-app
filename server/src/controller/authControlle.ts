@@ -42,7 +42,8 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const { acessToken, refreshToken } = await loginUserService(req.body as User);
         res.cookie('accessToken', refreshToken, cookieOption).status(200).json({
             message: "User logged in successfully",
-            token: acessToken,
+            token: { acessToken, refreshToken }
+
         })
         next();
     } catch (error)

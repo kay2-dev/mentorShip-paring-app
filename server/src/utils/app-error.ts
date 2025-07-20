@@ -28,7 +28,7 @@ export class NotFoundError extends AppErr {
 
 export class BadRequestError extends AppErr {
     constructor (message = 'Bad Request') {
-        super(message, 401)
+        super(message, 400)
     }
 }
 

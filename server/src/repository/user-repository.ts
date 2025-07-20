@@ -12,6 +12,7 @@ export class UserRepository {
     async createUser (userData: NewUsers) {
         return await this.db.insert(usersTable).values(userData).returning();
     }
+
     async findUserByEmail (email: string) {
         return await this.db.select().from(usersTable).where(eq(usersTable.email, email))
     }
@@ -25,9 +26,11 @@ export class UserRepository {
         return { ...user, ...userProfile }
     }
     async updateUserProfile (id: number, profileData: UpdateUserProfile) {
+        console.log(id, 'hello')
         await this.db.update(profileTable).set(profileData).where(eq(profileTable.userId, id))
     }
     async updateUser (id: number, userData: UpdateUser) {
+        console.log('hello')
         await this.db.update(usersTable).set(userData).where(eq(usersTable.id, id))
     }
     async updateUserRole (id: number, newRole: TRoles) {

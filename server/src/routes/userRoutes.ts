@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { API_END_POINTS } from "../constant/constants";
-import { createUserProfile, getLoggedInUser } from "../controller/userController";
+import { createUserProfile, getLoggedInUser, findOneUser, updateUserProfile } from "../controller/userController";
 import { authGuard } from "../middleware/auth-Guard";
 import { validateIncomingData } from "../middleware/validate-incoming-data";
 import { zodProfileSchema } from "../lib/zod-validations-schema";
@@ -15,6 +15,6 @@ userRouter.post(
     validateIncomingData(zodProfileSchema),
     createUserProfile
 )
-userRouter.get(API_END_POINTS.userProfilesEndPoints.userProfile, authGuard,)
-userRouter.get(API_END_POINTS.userProfilesEndPoints.getUser, () => { })
-userRouter.put(API_END_POINTS.userProfilesEndPoints.updateProfile, () => { })
+userRouter.get(API_END_POINTS.userProfilesEndPoints.userProfile, authGuard, getLoggedInUser)
+userRouter.get(API_END_POINTS.userProfilesEndPoints.getUser, authGuard, findOneUser)
+userRouter.put(API_END_POINTS.userProfilesEndPoints.updateProfile, authGuard, updateUserProfile)

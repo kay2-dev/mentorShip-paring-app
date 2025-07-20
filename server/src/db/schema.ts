@@ -15,8 +15,8 @@ export const requestTable = pgTable("requests", {
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     requestStatus: requestStatusEnum('request-status')
 }, (table) => ({
-    mentorIndex: uniqueIndex('userId_request_index').on(table.mentorId),
-    menteeIndex: uniqueIndex('userId_request_index').on(table.menteeId),
+    mentorIndex: uniqueIndex('mentor_request_index').on(table.mentorId),
+    menteeIndex: uniqueIndex('mentee_request_index').on(table.menteeId),
 }))
 
 export const usersTable = pgTable("users", {

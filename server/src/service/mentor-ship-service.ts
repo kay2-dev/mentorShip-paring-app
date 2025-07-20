@@ -27,6 +27,9 @@ export const getAllMentorsService = async () => {
 // creating of request or sending of request
 // this added to the request List waiting for confirmatin
 
+// problems to solve if you send request to yourself.
+// only mentees can send requests
+
 export const sendRequestToMentorsService = async (sendRequest: TSendRequest, jwtPayload: JwtPayload) => {
     try
     {
@@ -55,11 +58,22 @@ export const acceptMenteeRequestsService = async (updateStatusPayload: TUpdateRe
 // TODO GET ALL REQUEST SENT TO MENTOR FROM MENTEE (FOR MENTEE)
 // create it in a way where the mentee can see the requests to the mentors
 
-export const getAllRequestsService = async (jwtPayload: JwtPayload) => {
+export const getAllRequestSentService = async (jwtPayload: JwtPayload) => {
     try
     {
         const { id } = jwtPayload
-        return await mentorShipRepository.getAllRequests(id)
+        return await mentorShipRepository.getAllRequestsSent(id)
+    } catch (error)
+    {
+        throw error
+    }
+}
+
+export const getAllRequestRecivedService = async (jwtPayload: JwtPayload) => {
+    try
+    {
+        const { id } = jwtPayload
+        return await mentorShipRepository.getAllRequestsRecived(id)
     } catch (error)
     {
         throw error

@@ -1,5 +1,5 @@
 {
-  "id": "bf712b89-1269-4787-af2b-22cfd4136991",
+  "id": "8a7396fc-e6be-40ae-b6be-9f526276fc29",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -188,8 +188,14 @@
           "primaryKey": true,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
+        "mentor_id": {
+          "name": "mentor_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "mentee_id": {
+          "name": "mentee_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -217,11 +223,26 @@
         }
       },
       "indexes": {
-        "userId_request_index": {
-          "name": "userId_request_index",
+        "mentor_request_index": {
+          "name": "mentor_request_index",
           "columns": [
             {
-              "expression": "user_id",
+              "expression": "mentor_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "mentee_request_index": {
+          "name": "mentee_request_index",
+          "columns": [
+            {
+              "expression": "mentee_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -234,12 +255,25 @@
         }
       },
       "foreignKeys": {
-        "requests_user_id_users_id_fk": {
-          "name": "requests_user_id_users_id_fk",
+        "requests_mentor_id_users_id_fk": {
+          "name": "requests_mentor_id_users_id_fk",
           "tableFrom": "requests",
           "tableTo": "users",
           "columnsFrom": [
-            "user_id"
+            "mentor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "requests_mentee_id_users_id_fk": {
+          "name": "requests_mentee_id_users_id_fk",
+          "tableFrom": "requests",
+          "tableTo": "users",
+          "columnsFrom": [
+            "mentee_id"
           ],
           "columnsTo": [
             "id"

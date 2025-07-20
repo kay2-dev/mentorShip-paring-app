@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express"
-import { acceptMenteeRequestsService, getAllMentorsService, sendRequestToMentorsService } from "../service/mentor-ship-service"
+import { acceptMenteeRequestsService, getAllMentorsService, getAllRequestRecivedService, getAllRequestSentService, sendRequestToMentorsService } from "../service/mentor-ship-service"
 import { TSendRequest, TUpdateRequestStatus } from "../lib/zod-validations-schema"
 
 
@@ -17,6 +17,8 @@ export const getAllMentors = async (req: Request, res: Response, next: NextFunct
 
 
 
+
+
 // creation of Request...
 export const sendRequestToMentors = async (req: Request, res: Response, next: NextFunction) => {
     try
@@ -29,6 +31,32 @@ export const sendRequestToMentors = async (req: Request, res: Response, next: Ne
         next(error)
     }
 }
+
+export const getAllRequestSent = async (req: Request, res: Response, next: NextFunction) => {
+    try
+    {
+        const requestSent = await getAllRequestSentService(req.user!)
+        res.status(200).json(requestSent)
+        next()
+    } catch (error)
+    {
+        next(error)
+    }
+}
+
+
+export const getAllRequestsRecived = async (req: Request, res: Response, next: NextFunction) => {
+    try
+    {
+        const requestReceived = await getAllRequestRecivedService(req.user!)
+        res.status(200).json(requestReceived)
+        next()
+    } catch (error)
+    {
+        next(error)
+    }
+}
+
 
 export const manageRequests = async (req: Request, res: Response, next: NextFunction) => {
     try

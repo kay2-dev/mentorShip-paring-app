@@ -1,3 +1,4 @@
+import { JwtPayload } from "jsonwebtoken"
 import { MentorShipRepository } from "../repository/mentor-ship-repository"
 
 
@@ -19,8 +20,15 @@ export const getAllMentorsService = async () => {
     }
 }
 
-export const sendRequestToMentorsService = async () => {
-
+export const sendRequestToMentorsService = async (jwtPayload: JwtPayload) => {
+    try
+    {
+        const { id } = jwtPayload
+        return await mentorShipRepository.createRequest(id)
+    } catch (error)
+    {
+        throw error
+    }
 }
 
 export const acceptMenteeRequestsService = async () => {

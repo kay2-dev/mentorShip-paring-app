@@ -19,6 +19,7 @@ export const API_END_POINTS = {
     },
 
     userProfilesEndPoints: {
+        createUserProfile: '/users/create-profile',
         userProfile: '/users/me',
         getUser: '/users/:id',
         updateProfile: '/users/me/profile'

@@ -1,10 +1,10 @@
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { userEnum, usersTable } from "../../db/schema";
+import { profileTable, userEnum, usersTable } from "../../db/schema";
 
 export type TRoles = typeof userEnum.enumValues[ number ]
 
 export interface UserPayload {
-    email: string
+    id: number
 }
 
 export interface User {
@@ -16,3 +16,6 @@ export interface User {
 
 export type NewUsers = InferInsertModel<typeof usersTable>
 export type Users = InferSelectModel<typeof usersTable>
+
+export type NewProfile = InferInsertModel<typeof profileTable>
+export type Profile = InferSelectModel<typeof profileTable>

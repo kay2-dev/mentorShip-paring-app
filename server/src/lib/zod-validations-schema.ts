@@ -17,7 +17,7 @@ export const zodRegisterUserSchema = baseUserSchema.extend({
     roles: z.enum(userEnum.enumValues)
 }).refine((data) => data.password === data.confirmPassword, { path: [ 'confirmPassword' ], message: 'Password does not match' })
 
-export const zodProdileSchema = z.object({
+export const zodProfileSchema = z.object({
     bio: z.string(),
     skills: z.array(z.string()),
     goals: z.array(z.string())

@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../db-index";
 import { usersTable, profileTable } from "../db/schema";
-import { TRoles, NewUsers, User } from "../types/user/user-types";
+import { TRoles, NewUsers, User, NewProfile } from "../types/user/user-types";
 
 export class UserRepository {
     db: typeof db;
@@ -16,8 +16,10 @@ export class UserRepository {
         return await this.db.select().from(usersTable).where(eq(usersTable.email, email))
     }
 
-    async createUserProfile (profileData: any) {
-        return await this.db.insert(profileTable).values(profileData)
+    async createUserProfile (profileData: NewProfile, id: number) {
+
+        console.log(profileData, id)
+        return await this.db.insert(profileTable).values({ ...profileData, userId: id })
     }
     async getUserProfile (id: number) {
         const userProfile = this.db.select().from(usersTable).where(eq(usersTable.id, id))

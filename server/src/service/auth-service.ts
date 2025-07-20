@@ -38,7 +38,7 @@ export async function loginUserService (userData: User) {
         if (!existingEmail || !isPasswordValid)
             throw new BadRequestError('invalid credentials')
         const jwtObject = {
-            email: existingEmail[ 0 ].email,
+            id: existingEmail[ 0 ].id,
         }
         return jwtHandler.generateToken(jwtObject)
     } catch (error: any)

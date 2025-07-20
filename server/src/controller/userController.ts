@@ -25,7 +25,6 @@ export const createUserProfile = async (req: Request, res: Response, next: NextF
 export const findOneUser = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-        console.log(req.params)
         const userFound = await findOneUserService(req.params.id)
         res.status(200).json({ userFound })
         next()

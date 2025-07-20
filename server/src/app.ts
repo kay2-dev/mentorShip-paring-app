@@ -4,6 +4,7 @@ import { authRouter } from './routes/authRoutes';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import { userRouter } from './routes/userRoutes';
+import { mentorRouter } from './routes/mentor';
 
 
 
@@ -22,6 +23,7 @@ app.use(express.json());
 
 app.use('/api/v1', authRouter)
 app.use('/api/v1', userRouter)
+app.use('/api/v1', mentorRouter)
 
 
 export default app;

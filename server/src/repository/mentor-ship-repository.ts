@@ -3,6 +3,7 @@ import { UserRepository } from "./user-repository";
 import { eq } from "drizzle-orm";
 
 
+
 // i want the uSerRepository to represent the base class of this menbtorship Repository
 export class MentorShipRepository extends UserRepository {
     constructor () {
@@ -10,8 +11,7 @@ export class MentorShipRepository extends UserRepository {
     }
 
     async getAllMentors () {
-        const mentors = await this.db.select().from(usersTable).where(eq(usersTable.roles, 'mentor'))
-        return mentors.map(mentor => this.getUser(mentor.id))
+        return await this.db.select().from(usersTable).where(eq(usersTable.roles, 'mentor'))
     }
 
 }

@@ -1,8 +1,21 @@
 import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date, serial } from "drizzle-orm/pg-core";
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
+export const requestStatusEnum = pgEnum('request-status', [ 'accepted', 'declined' ])
 
 
+// Todo for better structure we would create a request table
+
+
+export const requestTable = pgTable("requests", {
+    id: serial('id').primaryKey().notNull(),
+    userId: integer('user_id').references(() => usersTable.id).notNull(),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow(),
+    requestStatus: requestStatusEnum('request-status')
+}, (table) => ({
+    userRequestIndex: uniqueIndex('userId_request_index').on(table.userId)
+}))
 
 export const usersTable = pgTable("users", {
     id: serial('id').primaryKey().notNull(),
@@ -10,6 +23,7 @@ export const usersTable = pgTable("users", {
     password: varchar('password', { length: 100 }).notNull(),
     roles: userEnum('roles'),
     mentorId: integer('mentor_id'),
+    menteeId: integer('mentee_id'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
 
@@ -19,8 +33,12 @@ export const usersTable = pgTable("users", {
         foreignColumns: [ table.id ],
         name: 'mento_fk',
     }).onDelete('set null'),
+    menteeFk: foreignKey({
+        columns: [ table.menteeId ],
+        foreignColumns: [ table.id ],
+        name: 'mentee_fk',
+    }).onDelete('set null'),
     emailIndex: uniqueIndex('email_index').on(table.email)
-
 }))
 
 export const profileTable = pgTable("user_profiles", {

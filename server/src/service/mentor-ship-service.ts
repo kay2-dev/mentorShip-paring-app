@@ -7,8 +7,16 @@ import { MentorShipRepository } from "../repository/mentor-ship-repository"
 
 const mentorShipRepository = new MentorShipRepository()
 
+
+// get mentors woth all their profiles
 export const getAllMentorsService = async () => {
-    return await mentorShipRepository.getAllMentors()
+    try
+    {
+        return await mentorShipRepository.getAllMentors()
+    } catch (error)
+    {
+        throw error
+    }
 }
 
 export const sendRequestToMentorsService = async () => {

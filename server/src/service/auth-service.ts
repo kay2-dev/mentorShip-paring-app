@@ -12,7 +12,7 @@ const users: User[] = []
 
 const userRepository = new UserRepository()
 
-export async function registerUserService (userData: User) {    //  check if user already exists
+export async function registerUserService (userData: NewUsers) {    //  check if user already exists
 
     try
     {
@@ -27,9 +27,8 @@ export async function registerUserService (userData: User) {    //  check if use
 
 
 
-// TODO PROPER ERROR HANDLING
+
 export async function loginUserService (userData: User) {
-    //  check if user already exists
 
     try
     {
@@ -39,6 +38,7 @@ export async function loginUserService (userData: User) {
             throw new BadRequestError('invalid credentials')
         const jwtObject = {
             id: existingEmail[ 0 ].id,
+            role: existingEmail[ 0 ].roles
         }
         return jwtHandler.generateToken(jwtObject)
     } catch (error: any)

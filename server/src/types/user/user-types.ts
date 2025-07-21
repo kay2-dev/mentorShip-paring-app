@@ -6,6 +6,7 @@ export type TRequestStatus = typeof requestStatusEnum.enumValues[ number ]
 
 export interface UserPayload {
     id: number
+    role: TRoles
 }
 
 export type TRequestBody = {

@@ -1,5 +1,5 @@
 {
-  "id": "8a7396fc-e6be-40ae-b6be-9f526276fc29",
+  "id": "92473cd3-a553-486d-94f9-0a2e6286fa80",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -223,21 +223,6 @@
         }
       },
       "indexes": {
-        "mentor_request_index": {
-          "name": "mentor_request_index",
-          "columns": [
-            {
-              "expression": "mentor_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
         "mentee_request_index": {
           "name": "mentee_request_index",
           "columns": [
@@ -405,7 +390,7 @@
           "type": "user-roles",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "mentor_id": {
           "name": "mentor_id",

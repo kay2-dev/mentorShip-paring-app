@@ -15,7 +15,6 @@ export const requestTable = pgTable("requests", {
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     requestStatus: requestStatusEnum('request-status')
 }, (table) => ({
-    mentorIndex: uniqueIndex('mentor_request_index').on(table.mentorId),
     menteeIndex: uniqueIndex('mentee_request_index').on(table.menteeId),
 }))
 
@@ -23,7 +22,7 @@ export const usersTable = pgTable("users", {
     id: serial('id').primaryKey().notNull(),
     email: varchar('email', { length: 255 }).notNull().unique(),
     password: varchar('password', { length: 100 }).notNull(),
-    roles: userEnum('roles'),
+    roles: userEnum('roles').notNull(),
     mentorId: integer('mentor_id'),
     menteeId: integer('mentee_id'),
     createdAt: timestamp('created_at').notNull().defaultNow(),

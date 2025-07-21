@@ -1,6 +1,7 @@
 import { JwtPayload } from "jsonwebtoken"
 import { MentorShipRepository } from "../repository/mentor-ship-repository"
 import { TSendRequest, TUpdateRequestStatus } from "../lib/zod-validations-schema"
+import { BadRequestError } from "../utils/app-error"
 
 
 // filters
@@ -34,16 +35,19 @@ export const sendRequestToMentorsService = async (sendRequest: TSendRequest, jwt
     try
     {
         const { id } = jwtPayload
+
         return await mentorShipRepository.createRequest(sendRequest.mentorId, id)
+
     } catch (error)
     {
         throw error
     }
 }
 
-export const acceptMenteeRequestsService = async (requestId: string, updateStatusPayload: TUpdateRequestStatus) => {
+export const acceptMenteeRequestsService = async (requestId: string, updateStatusPayload: TUpdateRequestStatus, jwtPayload: JwtPayload) => {
     try
     {
+
         const { menteeId, status } = updateStatusPayload
         await mentorShipRepository.updateRequestStatus(parseInt(requestId), status)
         await mentorShipRepository.addMentees(menteeId)

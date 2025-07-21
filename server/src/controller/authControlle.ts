@@ -1,6 +1,6 @@
 
 import e, { Request, Response, NextFunction } from 'express';
-import { User, UserPayload } from '../types/user/user-types';
+import { NewUsers, User, UserPayload } from '../types/user/user-types';
 import { loginUserService, registerUserService } from '../service/auth-service';
 import { cookieOption } from '../constant/constants';
 import { jwtHandler } from '../utils/jwt-handler';
@@ -16,7 +16,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
 
     try
     {
-        await registerUserService(req.body as User);
+        await registerUserService(req.body as NewUsers);
         res.status(201).json({
             message: "User registered successfully",
         })

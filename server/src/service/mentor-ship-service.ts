@@ -44,13 +44,13 @@ export const sendRequestToMentorsService = async (sendRequest: TSendRequest, jwt
     }
 }
 
-export const acceptMenteeRequestsService = async (requestId: string, updateStatusPayload: TUpdateRequestStatus, jwtPayload: JwtPayload) => {
+export const acceptMenteeRequestsService = async (requestId: string, updateStatusPayload: TUpdateRequestStatus) => {
     try
     {
 
         const { menteeId, status } = updateStatusPayload
         await mentorShipRepository.updateRequestStatus(parseInt(requestId), status)
-        await mentorShipRepository.addMentees(menteeId)
+        await mentorShipRepository.addStatus(menteeId)
         await mentorShipRepository.deleteRequests(parseInt(requestId))
     } catch (error)
     {

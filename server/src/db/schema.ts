@@ -1,7 +1,7 @@
 import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date, serial } from "drizzle-orm/pg-core";
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
-export const requestStatusEnum = pgEnum('request-status', [ 'accepted', 'declined' ])
+export const requestStatusEnum = pgEnum('request-status', [ 'accepted', 'declined', 'pending' ])
 
 
 // Todo for better structure we would create a request table
@@ -13,7 +13,7 @@ export const requestTable = pgTable("requests", {
     menteeId: integer('mentee_id').references(() => usersTable.id).notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
-    requestStatus: requestStatusEnum('request-status')
+    requestStatus: requestStatusEnum('request-status').notNull().default('pending')
 }, (table) => ({
     menteeIndex: uniqueIndex('mentee_request_index').on(table.menteeId),
 }))

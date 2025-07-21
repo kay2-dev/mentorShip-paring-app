@@ -5,8 +5,8 @@ import { email } from 'zod'
 
 export const jwtHandler = {
     generateToken: (user: UserPayload) => {
-        const { id } = user
-        const acessToken = jwt.sign({ id }, config.JWT_SECRET, { expiresIn: '15m' })
+        const { id, role } = user
+        const acessToken = jwt.sign({ id, role }, config.JWT_SECRET, { expiresIn: '15m' })
         const refreshToken = jwt.sign({ id }, config.JWT_SECRET, { expiresIn: '7d', algorithm: "HS384" })
         return { refreshToken, acessToken }
     },

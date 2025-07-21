@@ -39,6 +39,7 @@ export class UnAuthorisedRequestError extends AppErr {
     }
 }
 
+
 export class ineternalServerError extends AppErr {
     constructor (message = 'An internal Server error occured') {
         super(message, 401)

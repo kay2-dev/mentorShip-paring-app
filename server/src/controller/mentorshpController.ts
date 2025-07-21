@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 import { acceptMenteeRequestsService, getAllMentorsService, getAllRequestRecivedService, getAllRequestSentService, sendRequestToMentorsService } from "../service/mentor-ship-service"
 import { TSendRequest, TUpdateRequestStatus } from "../lib/zod-validations-schema"
+import { UserPayload } from "../types/user/user-types"
 
 
 export const getAllMentors = async (req: Request, res: Response, next: NextFunction) => {

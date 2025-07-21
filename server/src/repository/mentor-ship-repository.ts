@@ -32,9 +32,11 @@ export class MentorShipRepository extends UserRepository {
         await this.db.update(requestTable).set({ requestStatus: status }).where(eq(requestTable.id, requestId))
     }
 
-    async addMentees (id: number) {
+
+    async addStatus (id: number) {
         const [ meenteesRequests ] = await this.db.select().from(requestTable).where(eq(requestTable.menteeId, id))
-        await this.db.update(usersTable).set({ menteeId: meenteesRequests.menteeId }).where(eq(usersTable.roles, 'mentee'))
+        await this.db.update(usersTable).set({ mentorId: meenteesRequests.mentorId }).where(eq(usersTable.id, meenteesRequests.menteeId))
+        await this.db.update(usersTable).set({ menteeId: meenteesRequests.menteeId }).where(eq(usersTable.id, meenteesRequests.mentorId))
     }
     // assuming its only the mentor can see this
     async deleteRequests (requestId: number) {

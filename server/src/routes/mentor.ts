@@ -12,5 +12,5 @@ export const mentorRouter = Router();
 mentorRouter.get(API_END_POINTS.mentorShipRequestsEndPoints.mentors, authGuard, checkRole("mentee"), getAllMentors);
 mentorRouter.get(API_END_POINTS.mentorShipRequestsEndPoints.requestSent, authGuard, checkRole("mentee"), getAllRequestSent);
 mentorRouter.get(API_END_POINTS.mentorShipRequestsEndPoints.requestReceived, authGuard, checkRole("mentor"), getAllRequestsRecived);
-mentorRouter.post(API_END_POINTS.mentorShipRequestsEndPoints.request, authGuard, validateIncomingData(zodSendRequest), checkRole("mentee"), sendRequestToMentors);
-mentorRouter.put(API_END_POINTS.mentorShipRequestsEndPoints.requestStatusUpdate, authGuard, validateIncomingData(zodUpdateRequestStatus), checkRole("mentor"), manageRequests);
+mentorRouter.post(API_END_POINTS.mentorShipRequestsEndPoints.request, authGuard, checkRole("mentee"), validateIncomingData(zodSendRequest), sendRequestToMentors);
+mentorRouter.put(API_END_POINTS.mentorShipRequestsEndPoints.requestStatusUpdate, authGuard, checkRole("mentor"), validateIncomingData(zodUpdateRequestStatus), manageRequests);

@@ -34,9 +34,7 @@ export const sendRequestToMentorsService = async (sendRequest: TSendRequest, jwt
     try
     {
         const { id } = jwtPayload
-
         return await mentorShipRepository.createRequest(sendRequest.mentorId, id)
-
     } catch (error)
     {
         throw error

@@ -1,3 +1,4 @@
+import { timeStamp } from "console";
 import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date, serial } from "drizzle-orm/pg-core";
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
@@ -18,29 +19,25 @@ export const requestTable = pgTable("requests", {
     menteeIndex: uniqueIndex('mentee_request_index').on(table.menteeId),
 }))
 
+export const mentorShipParingTable = pgTable("mentor-ship-paring-table", {
+    id: serial('id').primaryKey().notNull(),
+    mentorId: integer('mentor_id').references(() => usersTable.id, { onDelete: "cascade" }),
+    menteeId: integer('mentee_id').references(() => usersTable.id, { onDelete: "cascade" }),
+    createdAt: timestamp('created_at').notNull().defaultNow(),
+    updatedAt: timestamp('updated_at').notNull().defaultNow(),
+})
 
 export const usersTable = pgTable("users", {
     id: serial('id').primaryKey().notNull(),
     email: varchar('email', { length: 255 }).notNull().unique(),
     password: varchar('password', { length: 100 }).notNull(),
     roles: userEnum('roles').notNull(),
-    mentorId: integer('mentor_id'),
-    menteeId: integer('mentee_id'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
-
 }, (table) => ({
     emailIndex: uniqueIndex('email_index').on(table.email)
 }))
 
-export const mentorMenteeTable = pgTable("mentor_mentee", {
-    id: serial('id').primaryKey().notNull(),
-    mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
-    menteeId: integer('mentee_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
-    createdAt: timestamp('created_at').notNull().defaultNow()
-}, (table) => ({
-    mentorMenteeIdx: uniqueIndex('mentor_mentee_idx').on(table.mentorId, table.menteeId)
-}));
 
 export const profileTable = pgTable("user_profiles", {
     id: serial('id').primaryKey().notNull(),

@@ -1,5 +1,5 @@
 {
-  "id": "f0d61d56-9f2d-4493-a329-aa80e69c87a9",
+  "id": "4c53d6d1-01d5-4b1b-aaed-a3d730047593",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -91,8 +91,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.mentor_mentee": {
-      "name": "mentor_mentee",
+    "public.mentor-ship-paring-table": {
+      "name": "mentor-ship-paring-table",
       "schema": "",
       "columns": {
         "id": {
@@ -105,13 +105,13 @@
           "name": "mentor_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "mentee_id": {
           "name": "mentee_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -119,35 +119,20 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
-      "indexes": {
-        "mentor_mentee_idx": {
-          "name": "mentor_mentee_idx",
-          "columns": [
-            {
-              "expression": "mentor_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            },
-            {
-              "expression": "mentee_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
+      "indexes": {},
       "foreignKeys": {
-        "mentor_mentee_mentor_id_users_id_fk": {
-          "name": "mentor_mentee_mentor_id_users_id_fk",
-          "tableFrom": "mentor_mentee",
+        "mentor-ship-paring-table_mentor_id_users_id_fk": {
+          "name": "mentor-ship-paring-table_mentor_id_users_id_fk",
+          "tableFrom": "mentor-ship-paring-table",
           "tableTo": "users",
           "columnsFrom": [
             "mentor_id"
@@ -158,9 +143,9 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "mentor_mentee_mentee_id_users_id_fk": {
-          "name": "mentor_mentee_mentee_id_users_id_fk",
-          "tableFrom": "mentor_mentee",
+        "mentor-ship-paring-table_mentee_id_users_id_fk": {
+          "name": "mentor-ship-paring-table_mentee_id_users_id_fk",
+          "tableFrom": "mentor-ship-paring-table",
           "tableTo": "users",
           "columnsFrom": [
             "mentee_id"
@@ -479,18 +464,6 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
-        },
-        "mentor_id": {
-          "name": "mentor_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "mentee_id": {
-          "name": "mentee_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
         },
         "created_at": {
           "name": "created_at",

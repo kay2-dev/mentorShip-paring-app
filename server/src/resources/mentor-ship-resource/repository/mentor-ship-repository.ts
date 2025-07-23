@@ -1,7 +1,7 @@
 
 import { eq } from "drizzle-orm";
 import { UserRepository } from "../../user-resource/repository/user-repository";
-import { usersTable, requestTable, mentorMenteeTable } from "../../../db/schema";
+import { usersTable, requestTable, mentorShipParingTable } from "../../../db/schema";
 import { TRequestStatus } from "../../../types/user/user-types";
 
 
@@ -31,15 +31,17 @@ export class MentorShipRepository extends UserRepository {
     }
     async updateRequestStatus (requestId: number, status: TRequestStatus) {
         await this.db.update(requestTable).set({ requestStatus: status }).where(eq(requestTable.id, requestId))
+        return
     }
-
 
     async addStatus (id: number) {
         const [ meenteesRequests ] = await this.db.select().from(requestTable).where(eq(requestTable.menteeId, id))
-        await this.db.insert(mentorMenteeTable).values({ menteeId: meenteesRequests.menteeId, mentorId: meenteesRequests.mentorId })
+        await this.db.insert(mentorShipParingTable).values({ menteeId: meenteesRequests.id, mentorId: id })
+        return
     }
     // assuming its only the mentor can see this
     async deleteRequests (requestId: number) {
         await this.db.delete(requestTable).where(eq(requestTable.id, requestId))
+        return
     }
 }

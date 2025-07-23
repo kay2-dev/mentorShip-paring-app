@@ -1,6 +1,6 @@
 import { Router } from "express";
+import { API_END_POINTS } from "../../../constant/constants";
 
-import { API_END_POINTS } from "../constant/constants";
 
 export const sessionsRouter = Router();
 

@@ -1,13 +1,12 @@
 import bcrypt from 'bcrypt'
-import { NewUsers, User } from '../types/user/user-types';
-import { config } from '../config/config';
 import jwt from 'jsonwebtoken'
-import { UserRepository } from '../repository/user-repository';
-import { jwtHandler } from '../utils/jwt-handler';
-import { BadRequestError } from '../utils/app-error';
+import { UserRepository } from '../../user-resource/repository/user-repository'
+import { NewUsers, User } from '../../../types/user/user-types'
+import { BadRequestError } from '../../../utils/app-error'
+import { jwtHandler } from '../../../utils/jwt-handler'
 
 
-const users: User[] = []
+
 
 
 const userRepository = new UserRepository()
@@ -45,22 +44,4 @@ export async function loginUserService (userData: User) {
     {
         throw new BadRequestError(error.message)
     }
-}
-
-
-
-
-// TODO WORK ON THIS FUNCTION TO GET AUTHENTICATED USER
-
-export async function getUserService (email: string) {
-    try
-    {
-
-    } catch (error)
-    {
-
-    }
-    const user = users.find((user) => user.email === email);
-    if (!user) throw new Error('User not found');
-    return user;
 }

@@ -1,7 +1,8 @@
-import { mentorMenteeTable, requestTable, usersTable } from "../db/schema";
-import { NewRequest, TRequestStatus, UpdateRequest } from "../types/user/user-types";
-import { UserRepository } from "./user-repository";
+
 import { eq } from "drizzle-orm";
+import { UserRepository } from "../../user-resource/repository/user-repository";
+import { usersTable, requestTable, mentorMenteeTable } from "../../../db/schema";
+import { TRequestStatus } from "../../../types/user/user-types";
 
 
 

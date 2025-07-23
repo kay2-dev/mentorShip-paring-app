@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
-import { createUserProfileService, findOneUserService, getLoggedInUserService, updateUserProfileService, updateUserService } from "../service/user-service"
-import { NewProfile, UpdateUser, UpdateUserProfile } from "../types/user/user-types"
-import { BadRequestError } from "../utils/app-error"
+import { NewProfile, UpdateUser, UpdateUserProfile } from "../../../types/user/user-types"
+import { BadRequestError } from "../../../utils/app-error"
+import { createUserProfileService, findOneUserService, getLoggedInUserService, updateUserService, updateUserProfileService } from "./user-service"
 
 // profile creation
 // getOne Profile

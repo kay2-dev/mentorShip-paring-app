@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
-import { db } from "../db-index";
-import { usersTable, profileTable } from "../db/schema";
-import { TRoles, NewUsers, NewProfile, Profile, Users, UpdateUserProfile, UpdateUser } from "../types/user/user-types";
+import { db } from "../../../db-index";
+import { usersTable, profileTable } from "../../../db/schema";
+import { NewUsers, NewProfile, UpdateUserProfile, UpdateUser, TRoles } from "../../../types/user/user-types";
 
 
 

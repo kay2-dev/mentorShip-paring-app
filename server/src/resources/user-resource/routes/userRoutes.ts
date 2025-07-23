@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { API_END_POINTS } from "../constant/constants";
 import { createUserProfile, getLoggedInUser, findOneUser, updateUserProfile } from "../controller/userController";
-import { authGuard } from "../middleware/auth-Guard";
-import { validateIncomingData } from "../middleware/validate-incoming-data";
-import { zodProfileSchema } from "../lib/zod-validations-schema";
+import { API_END_POINTS } from "../../../constant/constants";
+import { zodProfileSchema } from "../../../lib/zod-validations-schema";
+import { authGuard } from "../../../middleware/auth-Guard";
+import { validateIncomingData } from "../../../middleware/validate-incoming-data";
+
 
 
 export const userRouter = Router()

@@ -1,7 +1,8 @@
 import { JwtPayload } from "jsonwebtoken";
 import { UserRepository } from "../repository/user-repository";
-import { NewProfile, UpdateUser, UpdateUserProfile } from "../types/user/user-types";
-import { BadRequestError } from "../utils/app-error";
+import { NewProfile, UpdateUser, UpdateUserProfile } from "../../../types/user/user-types";
+import { BadRequestError } from "../../../utils/app-error";
+
 
 
 const userRepository = new UserRepository()

@@ -1,7 +1,6 @@
 import { JwtPayload } from "jsonwebtoken"
 import { MentorShipRepository } from "../repository/mentor-ship-repository"
-import { TSendRequest, TUpdateRequestStatus } from "../lib/zod-validations-schema"
-import { BadRequestError } from "../utils/app-error"
+import { TSendRequest, TUpdateRequestStatus } from "../../../lib/zod-validations-schema"
 
 
 // filters

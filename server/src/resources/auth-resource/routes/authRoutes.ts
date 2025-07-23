@@ -1,8 +1,9 @@
 import express from 'express';
-import { API_END_POINTS } from "../constant/constants";
 import { login, refresh, register } from '../controller/authControlle';
-import { validateIncomingData } from '../middleware/validate-incoming-data';
-import { baseUserSchema, zodRegisterUserSchema } from '../lib/zod-validations-schema';
+import { API_END_POINTS } from '../../../constant/constants';
+import { zodRegisterUserSchema, baseUserSchema } from '../../../lib/zod-validations-schema';
+import { validateIncomingData } from '../../../middleware/validate-incoming-data';
+;
 
 export const authRouter = express.Router()
 

@@ -1,13 +1,14 @@
 
-import e, { Request, Response, NextFunction } from 'express';
-import { NewUsers, User, UserPayload } from '../types/user/user-types';
-import { loginUserService, registerUserService } from '../service/auth-service';
-import { cookieOption } from '../constant/constants';
-import { jwtHandler } from '../utils/jwt-handler';
-import { config } from '../config/config';
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
-import { error } from 'console';
-import { BadRequestError, ineternalServerError } from '../utils/app-error';
+import { loginUserService, registerUserService } from './auth-service';
+import { NewUsers, User, UserPayload } from '../../../types/user/user-types';
+import { BadRequestError, ineternalServerError } from '../../../utils/app-error';
+import { cookieOption } from '../../../constant/constants';
+import { config } from '../../../config/config';
+import { jwtHandler } from '../../../utils/jwt-handler';
+
+
 
 
 

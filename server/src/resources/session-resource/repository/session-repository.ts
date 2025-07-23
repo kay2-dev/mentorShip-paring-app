@@ -1,6 +1,7 @@
-import { db } from "../db-index"
-import { availability, session } from "../db/schema"
+
 import { eq } from 'drizzle-orm'
+import { db } from '../../../db-index'
+import { availability, session } from '../../../db/schema'
 
 export class SessionRepository {
     db: typeof db

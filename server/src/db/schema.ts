@@ -18,6 +18,7 @@ export const requestTable = pgTable("requests", {
     menteeIndex: uniqueIndex('mentee_request_index').on(table.menteeId),
 }))
 
+
 export const usersTable = pgTable("users", {
     id: serial('id').primaryKey().notNull(),
     email: varchar('email', { length: 255 }).notNull().unique(),
@@ -29,18 +30,17 @@ export const usersTable = pgTable("users", {
     updatedAt: timestamp('updated_at').notNull().defaultNow()
 
 }, (table) => ({
-    mentorFk: foreignKey({
-        columns: [ table.mentorId ],
-        foreignColumns: [ table.id ],
-        name: 'mento_fk',
-    }).onDelete('set null'),
-    menteeFk: foreignKey({
-        columns: [ table.menteeId ],
-        foreignColumns: [ table.id ],
-        name: 'mentee_fk',
-    }).onDelete('set null'),
     emailIndex: uniqueIndex('email_index').on(table.email)
 }))
+
+export const mentorMenteeTable = pgTable("mentor_mentee", {
+    id: serial('id').primaryKey().notNull(),
+    mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
+    menteeId: integer('mentee_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at').notNull().defaultNow()
+}, (table) => ({
+    mentorMenteeIdx: uniqueIndex('mentor_mentee_idx').on(table.mentorId, table.menteeId)
+}));
 
 export const profileTable = pgTable("user_profiles", {
     id: serial('id').primaryKey().notNull(),

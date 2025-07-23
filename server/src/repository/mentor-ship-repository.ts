@@ -1,4 +1,4 @@
-import { requestTable, usersTable } from "../db/schema";
+import { mentorMenteeTable, requestTable, usersTable } from "../db/schema";
 import { NewRequest, TRequestStatus, UpdateRequest } from "../types/user/user-types";
 import { UserRepository } from "./user-repository";
 import { eq } from "drizzle-orm";
@@ -35,8 +35,7 @@ export class MentorShipRepository extends UserRepository {
 
     async addStatus (id: number) {
         const [ meenteesRequests ] = await this.db.select().from(requestTable).where(eq(requestTable.menteeId, id))
-        await this.db.update(usersTable).set({ mentorId: meenteesRequests.mentorId }).where(eq(usersTable.id, meenteesRequests.menteeId))
-        await this.db.update(usersTable).set({ menteeId: meenteesRequests.menteeId }).where(eq(usersTable.id, meenteesRequests.mentorId))
+        await this.db.insert(mentorMenteeTable).values({ menteeId: meenteesRequests.menteeId, mentorId: meenteesRequests.mentorId })
     }
     // assuming its only the mentor can see this
     async deleteRequests (requestId: number) {

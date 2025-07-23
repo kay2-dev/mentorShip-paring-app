@@ -50,7 +50,8 @@ export const acceptMenteeRequestsService = async (requestId: string, updateStatu
 
         const { menteeId, status } = updateStatusPayload
         await mentorShipRepository.updateRequestStatus(parseInt(requestId), status)
-        await mentorShipRepository.addStatus(menteeId)
+        if (status === "accepted")
+            await mentorShipRepository.addStatus(menteeId)
         await mentorShipRepository.deleteRequests(parseInt(requestId))
     } catch (error)
     {

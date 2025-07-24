@@ -33,6 +33,13 @@ export const API_END_POINTS = {
         requestStatusUpdate: '/requests/:id'
     },
 
+    availabilityEndPoints: {
+        getAllAvaliability: '/avalibilty',
+        createAvaliability: '/avaliabilty/create',
+        updateAvliability: '/avaliability/update',
+        deletAvaliability: '/avaliability/delete'
+    },
+
     sessionsEndPoints: {
         sessions: '/sessions',
         getAllSessionsForMentor: '/sessions/mentor',

@@ -3,6 +3,7 @@ import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreig
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
 export const requestStatusEnum = pgEnum('request-status', [ 'accepted', 'declined', 'pending' ])
+export const sessionStatusEnum = pgEnum('session-status', [ 'scheduled', 'cancelled', 'completed', 'expired' ])
 
 
 // Todo for better structure we would create a request table
@@ -59,6 +60,7 @@ export const profileTable = pgTable("user_profiles", {
 export const availability = pgTable("availabilities", {
     id: serial('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
+    dateOfWeek: varchar('date-of-the-week'),
     date: date('date').notNull(),
     start: timestamp('start_time').notNull(),
     end: timestamp('end_time').notNull(),
@@ -72,9 +74,13 @@ export const session = pgTable("session", {
     id: serial('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
     menteeId: integer('mentee_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
-    date: timestamp('date').notNull(),
+    startTime: timestamp('start_time').notNull(),
+    endTime: timestamp('end_time').notNull(),
+    joinLink: varchar('join_link').notNull(),
+    platform: varchar('platform').notNull(),
+    sessionStatus: sessionStatusEnum('session-status').notNull(),
     feedBack: varchar('feed_back', { length: 255 }),
-    rating: integer('rating').notNull(),
+    rating: integer('rating'),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
 })

@@ -113,3 +113,6 @@ This project
 - check if mentor can accept requets
 - mentee must not be able to send requets to themslef
 - mentor must not be able to send requests to themselfs
+
+
+## USER WOULD BE ABLE TO BOOK SESSIONS BASED ON THE MENTOR AVALIBILITY

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { TRoles, UserPayload } from "../types/user/user-types";
 import { BadRequestError, UnAuthorisedRequestError } from "../utils/app-error";
-import { UserRepository } from "../repository/user-repository";
+import { UserRepository } from "../resources/user-resource/repository/user-repository";
 
 
 const userRepository = new UserRepository()

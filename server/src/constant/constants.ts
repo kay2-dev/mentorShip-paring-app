@@ -29,7 +29,7 @@ export const API_END_POINTS = {
         mentors: '/all-mentors',
         request: '/requests',
         requestSent: '/requests/sent',
-        requestReceived: '/requests/recevied',
+        requestReceived: '/requests/received',
         requestStatusUpdate: '/requests/:id'
     },
 

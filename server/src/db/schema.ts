@@ -1,5 +1,5 @@
-import { timeStamp } from "console";
-import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date, serial } from "drizzle-orm/pg-core";
+import { table, timeStamp } from "console";
+import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreignKey, date, serial, unique } from "drizzle-orm/pg-core";
 
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
 export const requestStatusEnum = pgEnum('request-status', [ 'accepted', 'declined', 'pending' ])
@@ -15,9 +15,10 @@ export const requestTable = pgTable("requests", {
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
     requestStatus: requestStatusEnum('request-status').notNull().default('pending')
-}, (table) => ({
-    menteeIndex: uniqueIndex('mentee_request_index').on(table.menteeId),
+}, ((table) => ({
+    uniqueMentorShipParing: unique().on(table.menteeId, table.mentorId)
 }))
+)
 
 export const mentorShipParingTable = pgTable("mentor-ship-paring-table", {
     id: serial('id').primaryKey().notNull(),
@@ -25,7 +26,10 @@ export const mentorShipParingTable = pgTable("mentor-ship-paring-table", {
     menteeId: integer('mentee_id').references(() => usersTable.id, { onDelete: "cascade" }),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow(),
+}, ((table) => ({
+    uniquePair: unique().on(table.menteeId, table.mentorId)
 })
+))
 
 export const usersTable = pgTable("users", {
     id: serial('id').primaryKey().notNull(),

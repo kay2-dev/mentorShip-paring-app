@@ -1,5 +1,5 @@
 {
-  "id": "4c53d6d1-01d5-4b1b-aaed-a3d730047593",
+  "id": "10be0ac9-f2b4-489a-816f-9f9f35570919",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -158,7 +158,16 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "mentor-ship-paring-table_mentee_id_mentor_id_unique": {
+          "name": "mentor-ship-paring-table_mentee_id_mentor_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "mentee_id",
+            "mentor_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -295,23 +304,7 @@
           "default": "'pending'"
         }
       },
-      "indexes": {
-        "mentee_request_index": {
-          "name": "mentee_request_index",
-          "columns": [
-            {
-              "expression": "mentee_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": true,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
+      "indexes": {},
       "foreignKeys": {
         "requests_mentor_id_users_id_fk": {
           "name": "requests_mentor_id_users_id_fk",
@@ -341,7 +334,16 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "requests_mentee_id_mentor_id_unique": {
+          "name": "requests_mentee_id_mentor_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "mentee_id",
+            "mentor_id"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

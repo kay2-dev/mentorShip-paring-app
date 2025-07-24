@@ -1,11 +1,10 @@
 
 import express from 'express';
-import { authRouter } from './routes/authRoutes';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
-import { userRouter } from './routes/userRoutes';
-import { mentorRouter } from './routes/mentor';
-
+import { authRouter } from './resources/auth-resource/routes/authRoutes';
+import { mentorRouter } from './resources/mentor-ship-resource/routes/mentor';
+import { userRouter } from './resources/user-resource/routes/userRoutes';
 
 
 

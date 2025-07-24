@@ -26,8 +26,9 @@ export const sendRequestToMentors = async (req: Request, res: Response, next: Ne
         await sendRequestToMentorsService(req.body as TSendRequest, req.user!)
         res.json({ message: 'request sent succefully' })
         next()
-    } catch (error)
+    } catch (error: any)
     {
+        console.log(error.message)
         next(error)
     }
 }

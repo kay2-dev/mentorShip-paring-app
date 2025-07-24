@@ -35,9 +35,12 @@ export class MentorShipRepository extends UserRepository {
     async getAllRequestsRecived (mentorId: number) {
         return await this.db.select().from(requestTable).where(eq(requestTable.mentorId, mentorId))
     }
+    async findRequestId (id: number) {
+        return await this.db.select({ id: requestTable.id }).from(requestTable).where(eq(requestTable.id, id))
+    }
     async updateRequestStatus (requestId: number, status: TRequestStatus) {
-        await this.db.update(requestTable).set({ requestStatus: status }).where(eq(requestTable.id, requestId))
-        return
+        return await this.db.update(requestTable).set({ requestStatus: status }).where(eq(requestTable.id, requestId))
+
     }
 
     async addStatus (id: number) {

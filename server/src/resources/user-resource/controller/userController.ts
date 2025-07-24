@@ -3,11 +3,9 @@ import { NewProfile, UpdateUser, UpdateUserProfile } from "../../../types/user/u
 import { BadRequestError } from "../../../utils/app-error"
 import { createUserProfileService, findOneUserService, getLoggedInUserService, updateUserService, updateUserProfileService } from "./user-service"
 
-// profile creation
-// getOne Profile
-// update Perofile
-// delete user
-
+// TODO GET ALL USERS MENTORS
+// TODO GET ALL MENTEE USERS
+// TODO ADD RATE LIMIT
 export const createUserProfile = async (req: Request, res: Response, next: NextFunction) => {
     try
     {

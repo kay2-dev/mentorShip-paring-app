@@ -14,6 +14,9 @@ const mentorShipRepository = new MentorShipRepository()
 
 
 // get mentors woth all their profiles
+
+// TODO GET ALL LOGGED IN MENTEE MENTOR
+// TODO GET ALL LOGGED IN MENTOR MENTOR 
 export const getAllMentorsService = async () => {
     try
     {
@@ -36,7 +39,8 @@ export const sendRequestToMentorsService = async (sendRequest: TSendRequest, jwt
     {
         const { id } = jwtPayload
         const mentorsId = await mentorShipRepository.findMentor(id)
-        const ifAlreadyFollowing = mentorsId.includes({ mentorId: sendRequest.mentorId })
+        // look for a better way to do this
+        const ifAlreadyFollowing = mentorsId.find(mentor => mentor.mentorId === sendRequest.mentorId)
         if (ifAlreadyFollowing) throw new BadRequestError('You are already following this mentor')
         return await mentorShipRepository.createRequest(sendRequest.mentorId, id)
     } catch (error)
@@ -50,10 +54,16 @@ export const acceptMenteeRequestsService = async (requestId: string, updateStatu
     {
 
         const { menteeId, status } = updateStatusPayload
-        await mentorShipRepository.updateRequestStatus(parseInt(requestId), status)
+        const requestIdNumber = Number(requestId)
+        const requestsIdFromDB = await mentorShipRepository.findRequestId(requestIdNumber)
+
+        const requestIdFound = requestsIdFromDB.find(request => request.id = requestIdNumber)
+
+        if (!requestIdFound) throw new BadRequestError()
+        await mentorShipRepository.updateRequestStatus(requestIdNumber, status)
         if (status === "accepted")
             await mentorShipRepository.addStatus(menteeId)
-        await mentorShipRepository.deleteRequests(parseInt(requestId))
+        await mentorShipRepository.deleteRequests(requestIdNumber)
     } catch (error)
     {
         throw error

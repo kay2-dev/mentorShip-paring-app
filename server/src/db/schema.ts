@@ -60,7 +60,6 @@ export const profileTable = pgTable("user_profiles", {
 export const availability = pgTable("availabilities", {
     id: serial('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
-    dateOfWeek: varchar('date-of-the-week'),
     date: date('date').notNull(),
     start: timestamp('start_time').notNull(),
     end: timestamp('end_time').notNull(),

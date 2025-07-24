@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction } from 'express'
 
 
-const createSessionController = (req: Request, res: Response, next: NextFunction) => {
+export const createSessionController = (req: Request, res: Response, next: NextFunction) => {
     try
     {
         res.status(200).json({})
@@ -13,7 +13,7 @@ const createSessionController = (req: Request, res: Response, next: NextFunction
     }
 }
 
-const getSessionController = (req: Request, res: Response, next: NextFunction) => {
+export const getSessionController = (req: Request, res: Response, next: NextFunction) => {
     try
     {
         res.status(200).json({})
@@ -23,7 +23,7 @@ const getSessionController = (req: Request, res: Response, next: NextFunction) =
         next(error)
     }
 }
-const updateSessionController = (req: Request, res: Response, next: NextFunction) => {
+export const updateSessionController = (req: Request, res: Response, next: NextFunction) => {
     try
     {
         res.status(200).json({})

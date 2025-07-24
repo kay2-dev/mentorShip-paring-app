@@ -77,7 +77,7 @@ export const session = pgTable("session", {
     endTime: timestamp('end_time').notNull(),
     joinLink: varchar('join_link').notNull(),
     platform: varchar('platform').notNull(),
-    sessionStatus: sessionStatusEnum('session-status').notNull(),
+    sessionStatus: sessionStatusEnum('session-status').notNull().default('scheduled'),
     feedBack: varchar('feed_back', { length: 255 }),
     rating: integer('rating'),
     createdAt: timestamp('created_at').notNull().defaultNow(),

@@ -26,15 +26,15 @@ export const zodUpdateProdileSchema = zodProfileSchema.extend({}).partial()
 
 
 export const zodAvailabilitySchema = z.object({
-    date: z.string().refine(refineDate, {
-        message: 'invalid date'
-    }),
-    start: z.string(),
-    end: z.string()
+    date: z.string().refine(refineDate, { message: 'Invalid date' }),
+    startTime: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time'),
+    endTime: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time'),
 })
 
-export const zodSessionSchema = z.object({
-    date: z.string().refine(refineDate, { message: 'invalid date' }),
+export const zodSessionSchema = zodAvailabilitySchema.extend({
+    mentorId: z.number(),
+    joinLink: z.string().url(),
+    platform: z.string(),
     feedBack: z.string(),
     rating: z.number()
 })
@@ -46,5 +46,9 @@ export const zodUpdateRequestStatus = z.object({
     status: z.enum(requestStatusEnum.enumValues)
 })
 
+
+
 export type TSendRequest = z.infer<typeof zodSendRequest>
 export type TUpdateRequestStatus = z.infer<typeof zodUpdateRequestStatus>
+export type TAvailability = z.infer<typeof zodAvailabilitySchema>
+export type TSession = z.infer<typeof zodSessionSchema>

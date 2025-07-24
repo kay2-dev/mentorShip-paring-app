@@ -1,6 +1,7 @@
 import { JwtPayload } from "jsonwebtoken"
 import { MentorShipRepository } from "../repository/mentor-ship-repository"
 import { TSendRequest, TUpdateRequestStatus } from "../../../lib/zod-validations-schema"
+import { BadRequestError } from "../../../utils/app-error"
 
 
 // filters
@@ -34,6 +35,9 @@ export const sendRequestToMentorsService = async (sendRequest: TSendRequest, jwt
     try
     {
         const { id } = jwtPayload
+        const mentorsId = await mentorShipRepository.findMentor(id)
+        const ifAlreadyFollowing = mentorsId.includes({ mentorId: sendRequest.mentorId })
+        if (ifAlreadyFollowing) throw new BadRequestError('You are already following this mentor')
         return await mentorShipRepository.createRequest(sendRequest.mentorId, id)
     } catch (error)
     {

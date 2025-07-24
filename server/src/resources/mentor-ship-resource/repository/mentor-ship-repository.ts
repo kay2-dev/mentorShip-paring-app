@@ -19,6 +19,12 @@ export class MentorShipRepository extends UserRepository {
         return await this.db.select().from(usersTable).where(eq(usersTable.roles, 'mentor'))
     }
 
+
+
+    async findMentor (id: number) {
+        return await this.db.select({ mentorId: mentorShipParingTable.mentorId }).from(mentorShipParingTable).where(eq(mentorShipParingTable.menteeId, id))
+    }
+
     async createRequest (mentorId: number, menteeId: number) {
         return await this.db.insert(requestTable).values({ mentorId: mentorId, menteeId: menteeId })
     }
@@ -36,7 +42,7 @@ export class MentorShipRepository extends UserRepository {
 
     async addStatus (id: number) {
         const [ meenteesRequests ] = await this.db.select().from(requestTable).where(eq(requestTable.menteeId, id))
-        await this.db.insert(mentorShipParingTable).values({ menteeId: meenteesRequests.id, mentorId: id })
+        await this.db.insert(mentorShipParingTable).values({ menteeId: meenteesRequests.menteeId, mentorId: meenteesRequests.mentorId })
         return
     }
     // assuming its only the mentor can see this

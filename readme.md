@@ -107,3 +107,9 @@ Pull requests are welcome! Please open an issue first to discuss major changes.
 ## License
 
 This project
+
+## Test Cases For Sending Of Requests
+- check if mentee can send requests 
+- check if mentor can accept requets
+- mentee must not be able to send requets to themslef
+- mentor must not be able to send requests to themselfs

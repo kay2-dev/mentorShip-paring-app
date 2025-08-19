@@ -60,9 +60,9 @@ export const profileTable = pgTable("user_profiles", {
 export const availability = pgTable("availabilities", {
     id: serial('id').primaryKey().notNull(),
     mentorId: integer('mentor_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
-    date: date('date').notNull(),
-    start: timestamp('start_time').notNull(),
-    end: timestamp('end_time').notNull(),
+    dateTime: date('date').notNull(),
+    startTime: timestamp('start_time').notNull(),
+    endTime: timestamp('end_time').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
 }, (table) => ({

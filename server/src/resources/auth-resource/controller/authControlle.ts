@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
 import { loginUserService, registerUserService } from './auth-service';
 import { NewUsers, User, UserPayload } from '../../../types/user/user-types';
-import { BadRequestError, ineternalServerError } from '../../../utils/app-error';
+import { BadRequestError, ineternalServerError, UnAuthorisedRequestError } from '../../../utils/app-error';
 import { cookieOption } from '../../../constant/constants';
 import { config } from '../../../config/config';
 import { jwtHandler } from '../../../utils/jwt-handler';
@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 export const refresh = async (req: Request, res: Response, next: NextFunction) => {
     const refreshToken = req.cookies.refreshToken
 
-    if (!refreshToken) throw new BadRequestError()
+    if (!refreshToken) throw new UnAuthorisedRequestError()
 
     jwt.verify(refreshToken, config.JWT_SECRET, (error: jwt.VerifyErrors | null, user: any) => {
         if (error) return

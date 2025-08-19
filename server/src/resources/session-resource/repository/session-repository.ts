@@ -2,6 +2,8 @@
 import { eq } from 'drizzle-orm'
 import { db } from '../../../db-index'
 import { availability, session } from '../../../db/schema'
+import { TAvailability } from '../../../lib/zod-validations-schema'
+import { NewAvaliability, NeWSessionPayload } from '../../../types/user/user-types'
 
 export class SessionRepository {
     db: typeof db
@@ -10,8 +12,8 @@ export class SessionRepository {
     }
 
     // set weeklyAvliabilityBolck.
-    async setAvailabiltBlock (avalibityBlock: any) {
-        return await this.db.insert(availability).values(avalibityBlock)
+    async setAvailabiltBlock (data: NewAvaliability) {
+        return await this.db.insert(availability).values({ ...data })
     }
     async getAvailbility (mentorId: number) {
         return this.db.select().from(availability).where(eq(availability.mentorId, mentorId))
@@ -20,8 +22,8 @@ export class SessionRepository {
         return this.db.select().from(availability).where(eq(availability.id, id))
     }
 
-    async createSession (session: any) {
-        return await this.db.insert(session).values(session)
+    async createSession (sessionPayload: NeWSessionPayload) {
+        return await this.db.insert(session).values(sessionPayload)
     }
 
     async getAllSession () {

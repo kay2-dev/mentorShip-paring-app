@@ -1,5 +1,5 @@
 import { InferSelectModel, InferInsertModel } from "drizzle-orm";
-import { profileTable, requestStatusEnum, requestTable, userEnum, usersTable } from "../../db/schema";
+import { availability, profileTable, requestStatusEnum, requestTable, session, userEnum, usersTable } from "../../db/schema";
 
 export type TRoles = typeof userEnum.enumValues[ number ]
 export type TRequestStatus = typeof requestStatusEnum.enumValues[ number ]
@@ -35,3 +35,6 @@ export type UpdateUserProfile = Partial<Profile>
 export type NewRequest = InferInsertModel<typeof requestTable>
 
 export type UpdateRequest = Partial<NewRequest>
+
+export type NewAvaliability = InferInsertModel<typeof availability>
+export type NeWSessionPayload = InferInsertModel<typeof session>

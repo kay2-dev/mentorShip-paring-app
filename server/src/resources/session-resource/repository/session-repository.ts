@@ -22,6 +22,9 @@ export class SessionRepository {
         return this.db.select().from(availability).where(eq(availability.id, id))
     }
 
+    async updateAvalibiity (id: number, data: Partial<NewAvaliability>) {
+        return this.db.update(availability).set(data).where(eq(availability.id, id))
+    }
     async createSession (sessionPayload: NeWSessionPayload) {
         return await this.db.insert(session).values(sessionPayload)
     }

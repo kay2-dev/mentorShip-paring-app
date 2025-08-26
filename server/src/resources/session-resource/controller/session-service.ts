@@ -43,7 +43,8 @@ export const getAvailabiltyService = async (jwtPayLoad: JwtPayload) => {
 
 
 // from now on i will be calling my data payload
-export const createSessionService = async (jwtPayLoad: JwtPayload, sessionPayload: NeWSessionPayload) => {
+// we by the  actually choosing a slot which would be chosen by the id of the slot 
+export const bookSessionService = async (jwtPayLoad: JwtPayload, sessionPayload: NeWSessionPayload) => {
     try
     {
         const { id } = jwtPayLoad

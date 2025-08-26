@@ -4,10 +4,7 @@ import { integer, pgEnum, pgTable, varchar, text, timestamp, uniqueIndex, foreig
 export const userEnum = pgEnum('user-roles', [ 'mentor', 'mentee', 'admin' ])
 export const requestStatusEnum = pgEnum('request-status', [ 'accepted', 'declined', 'pending' ])
 export const sessionStatusEnum = pgEnum('session-status', [ 'scheduled', 'cancelled', 'completed', 'expired' ])
-
-
-// Todo for better structure we would create a request table
-
+export const bookedStatuEnum = pgEnum('booked-status', [ 'booked', 'unBooked' ])
 
 export const requestTable = pgTable("requests", {
     id: serial('id').primaryKey().notNull(),
@@ -63,6 +60,7 @@ export const availability = pgTable("availabilities", {
     dateTime: date('date').notNull(),
     startTime: timestamp('start_time').notNull(),
     endTime: timestamp('end_time').notNull(),
+    bookedStatus: bookedStatuEnum('booked-status').default('unBooked').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
 }, (table) => ({

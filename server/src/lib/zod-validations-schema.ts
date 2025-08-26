@@ -31,12 +31,10 @@ export const zodAvailabilitySchema = z.object({
     endTime: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time'),
 })
 
-export const zodSessionSchema = zodAvailabilitySchema.extend({
-    mentorId: z.number(),
-    joinLink: z.string().url(),
-    platform: z.string(),
-    feedBack: z.string(),
-    rating: z.number()
+
+// santize input through regex
+export const zodBookSessionSchema = z.object({
+    slotId: z.number()
 })
 
 export const zodSendRequest = z.object({ mentorId: z.number() })
@@ -51,4 +49,4 @@ export const zodUpdateRequestStatus = z.object({
 export type TSendRequest = z.infer<typeof zodSendRequest>
 export type TUpdateRequestStatus = z.infer<typeof zodUpdateRequestStatus>
 export type TAvailability = z.infer<typeof zodAvailabilitySchema>
-export type TSession = z.infer<typeof zodSessionSchema>
+export type TSession = z.infer<typeof zodBookSessionSchema>

@@ -1,5 +1,5 @@
 import express from 'express';
-import { login, refresh, register } from '../controller/authControlle';
+import { login, refresh, register } from '../controller/authController';
 import { API_END_POINTS } from '../../../constant/constants';
 import { zodRegisterUserSchema, baseUserSchema } from '../../../lib/zod-validations-schema';
 import { validateIncomingData } from '../../../middleware/validate-incoming-data';

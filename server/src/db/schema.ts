@@ -60,6 +60,8 @@ export const availability = pgTable("availabilities", {
     dateTime: date('date').notNull(),
     startTime: timestamp('start_time').notNull(),
     endTime: timestamp('end_time').notNull(),
+    joinLink: varchar('join_link').notNull(),
+    platform: varchar('platform').notNull(),
     bookedStatus: bookedStatuEnum('booked-status').default('unBooked').notNull(),
     createdAt: timestamp('created_at').notNull().defaultNow(),
     updatedAt: timestamp('updated_at').notNull().defaultNow()
@@ -73,8 +75,6 @@ export const session = pgTable("session", {
     menteeId: integer('mentee_id').notNull().references(() => usersTable.id, { onDelete: 'cascade' }),
     startTime: timestamp('start_time').notNull(),
     endTime: timestamp('end_time').notNull(),
-    joinLink: varchar('join_link').notNull(),
-    platform: varchar('platform').notNull(),
     sessionStatus: sessionStatusEnum('session-status').notNull().default('scheduled'),
     feedBack: varchar('feed_back', { length: 255 }),
     rating: integer('rating'),

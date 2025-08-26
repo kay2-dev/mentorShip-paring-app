@@ -19,7 +19,8 @@ export class SessionRepository {
         return this.db.select().from(availability).where(eq(availability.mentorId, mentorId))
     }
     async getOneAvailbility (id: number) {
-        return this.db.select().from(availability).where(eq(availability.id, id))
+        const [ slot ] = await this.db.select().from(availability).where(eq(availability.id, id))
+        return slot || null
     }
 
     async updateAvalibiity (id: number, data: Partial<NewAvaliability>) {

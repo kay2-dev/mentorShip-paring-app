@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken'
 import { loginUserService, registerUserService } from './auth-service';
 import { NewUsers, User, UserPayload } from '../../../types/user/user-types';
-import { BadRequestError, ineternalServerError, UnAuthorisedRequestError } from '../../../utils/app-error';
+import { BadRequestError, InternalServerError, UnAuthorisedRequestError } from '../../../utils/app-error';
 import { cookieOption } from '../../../constant/constants';
 import { config } from '../../../config/config';
 import { jwtHandler } from '../../../utils/jwt-handler';
@@ -26,7 +26,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
     {
         if (error.code === '23505')
         {
-            next(new ineternalServerError(error.message))
+            next(new InternalServerError(error.message))
         }
         next(error)
     }

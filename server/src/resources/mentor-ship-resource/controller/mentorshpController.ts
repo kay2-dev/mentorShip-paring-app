@@ -28,7 +28,6 @@ export const sendRequestToMentors = async (req: Request, res: Response, next: Ne
         next()
     } catch (error: any)
     {
-        console.log(error.message)
         next(error)
     }
 }

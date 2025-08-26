@@ -1,15 +1,21 @@
 
 import { Request, Response, NextFunction } from 'express'
+import { bookSessionService } from './session-service'
+import { JwtPayload } from 'jsonwebtoken'
+import { InternalServerError } from '../../../utils/app-error'
 
 
-export const createSessionController = (req: Request, res: Response, next: NextFunction) => {
+export const bookSessionController = async (req: Request, res: Response, next: NextFunction) => {
     try
     {
-        res.status(200).json({})
+        await bookSessionService(req.user!, req.body)
+        res.status(200).json({
+            message: 'session created'
+        })
         next()
-    } catch (error)
+    } catch (error: any)
     {
-        next(error)
+        next(new InternalServerError(error.message))
     }
 }
 

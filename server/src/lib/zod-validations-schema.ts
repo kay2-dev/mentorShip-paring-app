@@ -29,6 +29,8 @@ export const zodAvailabilitySchema = z.object({
     date: z.string().refine(refineDate, { message: 'Invalid date' }),
     startTime: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time'),
     endTime: z.string().regex(/^\d{2}:\d{2}$/, 'Invalid time'),
+    joinLink: z.url(),
+    platform: z.string()
 })
 
 
